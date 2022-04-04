@@ -1,7 +1,7 @@
-BRP1 is non-restrictive model data
+BRP1 is Unrestricted model data
 
 
-BRP2 is restrictive model data
+BRP2 is Restricted model data
 
 
 data.npy is generate matrix data
