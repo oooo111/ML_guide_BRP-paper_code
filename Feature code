@@ -1,0 +1,106 @@
+import pandas as pd
+import math
+
+class CRP:    
+    
+    def __init__(self):
+        self.dic={}
+        
+    def stack(self,matrix):        
+        count=0
+        for i in range(len(matrix)):
+            if len(matrix[i])==0:
+                continue
+            else:
+                count+=1
+            self.dic["stack"]=count
+        return count
+    
+    def height(self,matrix):
+        list1=[]
+        for i in range(len(matrix)):
+            list1.append(len(matrix[i]))
+        self.dic["height"]=max(list1)
+        return max(list1)
+    
+    def number(self,matrix):
+        count=0
+        for i in range(len(matrix)):
+            for j in range(len(matrix[i])):
+                if len(matrix[i])==0:
+                    continue
+                else:
+                    count+=1
+        self.dic["N"]=count
+        return count
+    
+    def maxcontainers(self,matrix):
+        self.dic["max_num"]=(self.stack(matrix)*self.height(matrix))-(self.height(matrix)-1)
+    #def ratep(self,matrix):
+        #self.dic["rate"]=self.number(matrix)//(self.stack(matrix)* self.height(matrix))
+        
+    def rate(self,matrix):
+        self.dic["utilization_rate"]=self.number(matrix)/(self.stack(matrix)*self.height(matrix))  
+        
+    #def UB(self,matrix):
+    #    k=math.ceil((self.number(matrix)-1)/(self.stack(matrix)-1))
+    #    if self.stack(matrix)>self.number(matrix):
+    #        self.dic["UB"]=self.number(matrix)-1
+    #    if (2<=self.stack(matrix)) and (self.stack(matrix)<= self.number(matrix)):
+    #        self.dic["UB"]=k*math.ceil(((self.number(matrix))-1)-((k-1)/2*(self.stack(matrixa)-1))
+    
+    
+    def UB(self,matrix):
+        k=math.ceil((self.number(matrix)-1)/(self.stack(matrix)-1))
+        if self.stack(matrix)>self.number(matrix):
+            self.dic["UB"]=self.number(matrix)-1
+        if 2<= self.stack(matrix) <= self.number(matrix):
+            self.dic["UB"]=k*math.ceil((self.number(matrix)-1)-(((k-1)/2)*(self.stack(matrix)-1)))
+        return k
+    
+    def each_stack(self,matrix):
+        for i in range(len(matrix)):
+            if len(matrix[i])==0 or sum(matrix[i])==0:
+                self.dic["stack"+str(i)]=0
+            else:
+                self.dic["stack"+str(i)]=len(matrix[i])
+            
+    
+    def utilized_stack(self,matrix):
+        count=0
+        for i in range(len(matrix)):
+            if len(matrix[i])==0:
+                continue
+            elif sum(matrix[i])==0:
+                continue
+            else:
+                count+=1
+        self.dic["utilized_stack"]=count
+    
+    def stack_max_sum(self,matrix):
+        for i in range(len(matrix)):
+            if matrix[i] == []:
+                self.dic["max_sum_stack"+str(i)]=0
+                continue
+            else:
+                num=min(matrix[i])
+            index=matrix[i].index(num)
+            if len(matrix[i])==0 or sum(matrix[i])==0:
+                self.dic["max_sum_stack"+str(i)]=0
+            else:
+                number=len(matrix[i])-1-index
+                self.dic["max_sum_stack"+str(i)]=number
+    def location(self,matrix):
+        for i in range(0,3):
+            for j in range(0,3):
+                self.dic["stack_"+str(i)+"-"+"height_"+str(j)]=0
+                if len(matrix[i])==0 or sum(matrix[i])==0:
+                    self.dic["stack_"+str(i)+"-"+"height_"+str(j)]=0 
+                if j<=len(matrix[i])-1:
+                    self.dic["stack_"+str(i)+"-"+"height_"+str(j)]=matrix[i][j]
+                else:
+                    continue
+                        
+    def printdata(self):
+        return pd.DataFrame(self.dic,index=[0])
+    
