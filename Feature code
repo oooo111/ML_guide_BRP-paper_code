@@ -36,6 +36,7 @@ class CRP:
     
     def maxcontainers(self,matrix):
         self.dic["max_num"]=(self.stack(matrix)*self.height(matrix))-(self.height(matrix)-1)
+        
     #def ratep(self,matrix):
         #self.dic["rate"]=self.number(matrix)//(self.stack(matrix)* self.height(matrix))
         
@@ -90,6 +91,7 @@ class CRP:
             else:
                 number=len(matrix[i])-1-index
                 self.dic["max_sum_stack"+str(i)]=number
+                
     def location(self,matrix):
         for i in range(0,3):
             for j in range(0,3):
